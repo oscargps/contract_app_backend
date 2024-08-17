@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import debug from 'debug';
 let envConfig: { [key: string]: string } = {};
 
-export const config = async () => {
+export const config = () => {
     if (['production', 'develop'].includes(process.env.NODE_ENV || '')) {
         try {
             envConfig = getEnvVariables();
@@ -16,10 +16,10 @@ export const config = async () => {
     return Promise.resolve(true);
 };
 
-const getVariable = async (key: string): Promise<string> => {
+const getVariable = (key: string): string => {
     try {
         if (!Object.keys(envConfig).length) {
-            await config();
+            config();
         }
         return envConfig[key];
     } catch (err) {
