@@ -2,7 +2,15 @@ import { Model, DataTypes, Sequelize } from "sequelize";
 import ConnectionDB from "../../core/services/db/db.service";
 import User from "./users.entity";
 
-class Session extends Model {
+export interface ISession {
+    session_id: number;
+    user_id: number;
+    jwt_token: string;
+    created_at: Date;
+    expires_at: Date;
+}
+
+class Session extends Model<ISession> {
     public session_id!: number;
     public user_id!: number;
     public jwt_token!: string;

@@ -1,7 +1,18 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
 import ConnectionDB from "../../core/services/db/db.service";
 
-class User extends Model {
+export interface IUser {
+    user_id: number;
+    full_name: string;
+    email: string;
+    password_hash: string;
+    role: string;
+    status: number;
+    created_at: Date;
+    updated_at: Date;
+}
+
+class User extends Model<IUser> {
     public user_id!: number;
     public full_name!: string;
     public email!: string;

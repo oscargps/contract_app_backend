@@ -2,7 +2,16 @@ import { Model, DataTypes, Sequelize } from "sequelize";
 import ConnectionDB from "../../core/services/db/db.service";
 import Provider from "./providers.entity";
 
-class OTP extends Model {
+export interface IOTP {
+    otp_id: number;
+    provider_id: number;
+    otp_code: string;
+    created_at: Date;
+    expires_at: Date;
+    status: number;
+}
+
+class OTP extends Model<IOTP> {
     public otp_id!: number;
     public provider_id!: number;
     public otp_code!: string;

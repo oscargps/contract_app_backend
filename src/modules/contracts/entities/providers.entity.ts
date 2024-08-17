@@ -1,7 +1,17 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
 import ConnectionDB from "../../core/services/db/db.service";
 
-class Provider extends Model {
+export interface IProvider {
+    provider_id: number;
+    document_type: string;
+    document_number: string;
+    full_name: string;
+    email: string;
+    phone: string | null;
+    registration_date: Date;
+}
+
+class Provider extends Model<IProvider> {
     public provider_id!: number;
     public document_type!: string;
     public document_number!: string;

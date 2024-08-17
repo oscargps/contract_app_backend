@@ -3,7 +3,25 @@ import ConnectionDB from "../../core/services/db/db.service";
 import Supervisor from "./supervisor.entity";
 import Provider from "./providers.entity";
 
-class Contract extends Model {
+export interface IContract {
+    contract_id: number;
+    provider_id: number;
+    contract_number: string;
+    purpose: string;
+    contractual_obligations: string;
+    total_value: number;
+    monthly_value: number;
+    duration: string;
+    start_date: Date;
+    end_date: Date;
+    status: string;
+    early_termination_date?: Date | null; // Opcional, ya que puede ser nulo
+    supervisor_id: number;
+    created_at: Date;
+    updated_at: Date;
+}
+
+class Contract extends Model<IContract> {
     public contract_id!: number;
     public provider_id!: number;
     public contract_number!: string;
@@ -91,16 +109,18 @@ Contract.init(
         created_at: {
             type: DataTypes.DATE,
             allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
         updated_at: {
             type: DataTypes.DATE,
             allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {
         sequelize,
         tableName: "contracts",
-        timestamps: false,  // Ya se gestionan manualmente los campos de fecha
+        timestamps: true,  // Ya se gestionan manualmente los campos de fecha
         underscored: true,  // Para utilizar nombres de columnas con guiones bajos en lugar de camelCase
     }
 );
