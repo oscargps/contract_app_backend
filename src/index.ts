@@ -2,6 +2,7 @@ import express from 'express';
 import healthRouter from './modules/core/router/health.router';
 import { getVariable } from './config';
 import catalogRouter from './modules/contracts/router/catalog.router';
+import contractRouter from './modules/contracts/router/contract.router';
 var debug = require('debug')('contractApp:launchServer');
 
 
@@ -13,6 +14,7 @@ var debug = require('debug')('contractApp:launchServer');
     app.use(express.urlencoded({ extended: true }))
     app.use('/', healthRouter);
     app.use('/catalogs', catalogRouter);
+    app.use('/contracts', contractRouter);
 
     app.set('port', port);
     debug(`Port set to ${port}`);
