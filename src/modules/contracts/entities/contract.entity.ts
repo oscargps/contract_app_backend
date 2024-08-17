@@ -37,6 +37,10 @@ class Contract extends Model<IContract> {
     public supervisor_id!: number;
     public created_at!: Date;
     public updated_at!: Date;
+
+    public readonly provider!: typeof Provider;
+    public readonly supervisor!: typeof Supervisor;
+
 }
 
 const sequelize: Sequelize = ConnectionDB.getConnection();
@@ -126,8 +130,8 @@ Contract.init(
 );
 
 // Definición de relaciones
-Contract.belongsTo(Provider, { foreignKey: 'provider_id' });
-Contract.belongsTo(Supervisor, { foreignKey: 'supervisor_id' });
+Contract.belongsTo(Provider, { foreignKey: 'provider_id', as: 'provider'});
+Contract.belongsTo(Supervisor, { foreignKey: 'supervisor_id', as: 'supervisor'});
 
 
 export default Contract;

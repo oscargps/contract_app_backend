@@ -12,6 +12,16 @@ class ContractController {
         this.contractService = new ContractService();
     }
 
+    public async getAll(req: Request, res: Response, next: any) {
+        try {
+            const contracts = await contractControllerInstance.contractService.getAllContracts()
+            debug("CATALOGS RESPONSE %o", contracts);
+            res.status(httpStatus.OK).json(contracts);
+        } catch (error: any) {
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ result: "FAIL TO GET CATALOGS" });
+        }
+    }
+
     public async createContract(req: Request, res: Response, next: any) {
         const dataContract = req.body.data as IContract
         debug("CREATING NEW CONTRACT %o", dataContract);
