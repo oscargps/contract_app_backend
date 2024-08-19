@@ -10,6 +10,7 @@ class ContractRouter {
   private config() {
     this.router.post("/create", contractControllerInstance.createContract);
     this.router.get("/all", contractControllerInstance.getAll);
+    this.router.get("/get-lists", contractControllerInstance.getLists);
   }
 }
 
