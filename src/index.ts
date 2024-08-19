@@ -3,6 +3,7 @@ import healthRouter from './modules/core/router/health.router';
 import { getVariable } from './config';
 import catalogRouter from './modules/contracts/router/catalog.router';
 import contractRouter from './modules/contracts/router/contract.router';
+import providerRouter from './modules/contracts/router/provider.router';
 var debug = require('debug')('contractApp:launchServer');
 
 
@@ -15,6 +16,7 @@ var debug = require('debug')('contractApp:launchServer');
     app.use('/', healthRouter);
     app.use('/catalogs', catalogRouter);
     app.use('/contracts', contractRouter);
+    app.use('/providers', providerRouter);
 
     app.set('port', port);
     debug(`Port set to ${port}`);

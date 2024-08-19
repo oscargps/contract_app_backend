@@ -2,7 +2,7 @@ import Contract, { IContract } from "../entities/contract.entity";
 import Provider from "../entities/providers.entity";
 import Supervisor from "../entities/supervisor.entity";
 
-var debug = require('debug')('contractApp:catalogService');
+var debug = require('debug')('contractApp:contractService');
 
 
 class ContractService {
@@ -25,6 +25,7 @@ class ContractService {
             });
         } catch (error: any) {
             debug("FAIL TO GET CONTRACTS, ERROR:", error)
+            throw new Error(error);
         }
     }
 

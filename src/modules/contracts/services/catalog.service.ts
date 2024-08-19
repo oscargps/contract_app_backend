@@ -10,6 +10,7 @@ class CatalogService {
             return await Catalog.findAll();
         } catch (error: any) {
             debug("FAIL TO GET CATALOGS, ERROR:", error)
+            throw new Error(error);
         }
     }
 }
