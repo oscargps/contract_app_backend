@@ -4,6 +4,7 @@ import { getVariable } from './config';
 import catalogRouter from './modules/contracts/router/catalog.router';
 import contractRouter from './modules/contracts/router/contract.router';
 import providerRouter from './modules/contracts/router/provider.router';
+import supervisorRouter from './modules/contracts/router/supervisor.router';
 var debug = require('debug')('contractApp:launchServer');
 
 
@@ -17,6 +18,7 @@ var debug = require('debug')('contractApp:launchServer');
     app.use('/catalogs', catalogRouter);
     app.use('/contracts', contractRouter);
     app.use('/providers', providerRouter);
+    app.use('/supervisors', supervisorRouter);
 
     app.set('port', port);
     debug(`Port set to ${port}`);
