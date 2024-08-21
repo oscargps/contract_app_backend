@@ -22,10 +22,28 @@ class ContractController {
     public async getAll(req: Request, res: Response, next: any) {
         try {
             const contracts = await contractControllerInstance.contractService.getAllContracts()
-            debug("CATALOGS RESPONSE %o", contracts);
+            debug("CONTRACTS RESPONSE %o", contracts);
             res.status(httpStatus.OK).json(contracts);
         } catch (error: any) {
             res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ result: "FAIL TO GET CATALOGS" });
+        }
+    }
+    public async getContract(req: Request, res: Response, next: any) {
+        try {
+            const contractCriteria = req.header('search-criteria') as string;
+            const contractToSearch = req.header('search-data') as string;
+            debug("SEARCHING CONTRACT %o", { contractCriteria, contractToSearch });
+            if (contractCriteria === "contract_number" && contractToSearch) {
+                const contractResponse = await contractControllerInstance.contractService.getContractByNumber(contractToSearch)
+                res.status(httpStatus.OK).json(contractResponse);
+            } else if (contractCriteria === "provider_id" && contractToSearch) {
+                const contractResponse = await contractControllerInstance.contractService.getContractByProvider(contractToSearch)
+                res.status(httpStatus.OK).json(contractResponse);
+            } else {
+                throw new Error("MISSING DATA");
+            }
+        } catch (error: any) {
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ result: `FAIL TO GET CONTRACT: ${error.message}` });
         }
     }
     public async getLists(req: Request, res: Response, next: any) {
@@ -36,7 +54,7 @@ class ContractController {
             const supervisors = await contractControllerInstance.supervisorService.getAllSupervisors()
             res.status(httpStatus.OK).json({ catalogs, providers, supervisors });
         } catch (error: any) {
-            res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ result: "FAIL TO GET CATALOGS" });
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).json({ result: "FAIL TO GET LISTS" });
         }
 
     }
