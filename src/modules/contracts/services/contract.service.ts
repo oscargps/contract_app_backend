@@ -31,7 +31,7 @@ class ContractService {
     public async getContractByNumber(contractNumber: string) {
         try {
             debug('GETING CONTRACT BY NUMBER');
-            return await Contract.findAll({
+            const findedContracts = await Contract.findAll({
                 where: {
                     contract_number: contractNumber
                 },
@@ -46,6 +46,10 @@ class ContractService {
                     }
                 ],
             });
+            if (findedContracts.length == 0) {
+                throw "No Contract found";
+            }
+            return findedContracts;
         } catch (error: any) {
             debug("FAIL TO GET CONTRACTS, ERROR:", error)
             throw new Error(error);
