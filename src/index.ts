@@ -6,7 +6,7 @@ import contractRouter from './modules/contracts/router/contract.router';
 import providerRouter from './modules/contracts/router/provider.router';
 import supervisorRouter from './modules/contracts/router/supervisor.router';
 var debug = require('debug')('contractApp:launchServer');
-
+import cors from 'cors'
 
 (async () => {
   try {
@@ -14,6 +14,7 @@ var debug = require('debug')('contractApp:launchServer');
     const app = express();
     app.use(express.json()) // for parsing application/json
     app.use(express.urlencoded({ extended: true }))
+    app.use(cors())
     app.use('/', healthRouter);
     app.use('/catalogs', catalogRouter);
     app.use('/contracts', contractRouter);
