@@ -60,8 +60,8 @@ class ContractController {
     }
 
     public async createContract(req: Request, res: Response, next: any) {
-        const dataContract = req.body.data as IContract
-        debug("CREATING NEW CONTRACT %o", dataContract);
+        const dataContract = req.body as IContract
+        debug("CREATING NEW CONTRACT %o", req.body);
         try {
             await contractControllerInstance.contractService.createContract(dataContract)
             res.status(httpStatus.OK).json({ result: "contract created" });
