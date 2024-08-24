@@ -1,6 +1,17 @@
 import { Model, DataTypes } from "sequelize";
 import ConnectionDB from "../../core/services/db/db.service";
 
+export interface ISupervisor {
+    supervisor_id: number;
+    full_name: string;
+    email: string;
+    phone: string | null;
+    position: string | null;
+    department: string | null;
+    status: number;
+    registration_date: Date;
+    updated_at: Date;
+}
 class Supervisor extends Model {
     public supervisor_id!: number;
     public full_name!: string;

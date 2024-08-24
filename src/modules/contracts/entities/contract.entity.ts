@@ -2,6 +2,7 @@ import { Model, DataTypes, Sequelize } from "sequelize";
 import ConnectionDB from "../../core/services/db/db.service";
 import Supervisor from "./supervisor.entity";
 import Provider from "./providers.entity";
+import Catalog from "./catalog.entity";
 
 export interface IContract {
     contract_id: number;
@@ -11,7 +12,6 @@ export interface IContract {
     contractual_obligations: string;
     total_value: number;
     monthly_value: number;
-    duration: string;
     start_date: Date;
     end_date: Date;
     status: string;
@@ -29,7 +29,6 @@ class Contract extends Model<IContract> {
     public contractual_obligations!: string;
     public total_value!: number;
     public monthly_value!: number;
-    public duration!: string;
     public start_date!: Date;
     public end_date!: Date;
     public status!: string;
@@ -38,6 +37,7 @@ class Contract extends Model<IContract> {
     public created_at!: Date;
     public updated_at!: Date;
 
+    public readonly status_value!: typeof Catalog;
     public readonly provider!: typeof Provider;
     public readonly supervisor!: typeof Supervisor;
 
@@ -82,10 +82,6 @@ Contract.init(
             type: DataTypes.DECIMAL(15, 2),
             allowNull: false,
         },
-        duration: {
-            type: DataTypes.STRING(100),
-            allowNull: false,
-        },
         start_date: {
             type: DataTypes.DATE,
             allowNull: false,
@@ -95,8 +91,12 @@ Contract.init(
             allowNull: false,
         },
         status: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: Catalog,
+                key: 'id',
+            },
         },
         early_termination_date: {
             type: DataTypes.DATE,
@@ -130,6 +130,7 @@ Contract.init(
 );
 
 // Definición de relaciones
+Contract.belongsTo(Catalog, { foreignKey: 'status', as: 'status_value'});
 Contract.belongsTo(Provider, { foreignKey: 'provider_id', as: 'provider'});
 Contract.belongsTo(Supervisor, { foreignKey: 'supervisor_id', as: 'supervisor'});
 

@@ -1,7 +1,15 @@
 import { Model, DataTypes } from "sequelize";
 import ConnectionDB from "../../core/services/db/db.service";
 
-class Catalog extends Model {
+
+interface ICatalog {
+    id: number;
+    type: string;
+    value: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+class Catalog extends Model<ICatalog> {
     public id!: number;
     public type!: string;
     public value!: string;

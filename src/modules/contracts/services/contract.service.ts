@@ -1,3 +1,4 @@
+import Catalog from "../entities/catalog.entity";
 import Contract, { IContract } from "../entities/contract.entity";
 import Provider from "../entities/providers.entity";
 import Supervisor from "../entities/supervisor.entity";
@@ -13,6 +14,10 @@ class ContractService {
             return await Contract.findAll({
                 limit: 10,
                 include: [
+                    {
+                        model: Catalog,
+                        as: 'status_value',
+                    },
                     {
                         model: Provider,
                         as: 'provider',
@@ -36,6 +41,10 @@ class ContractService {
                     contract_number: contractNumber
                 },
                 include: [
+                    {
+                        model: Catalog,
+                        as: 'status_value',
+                    },
                     {
                         model: Provider,
                         as: 'provider',
@@ -66,6 +75,10 @@ class ContractService {
                         provider_id: provider?.provider_id
                     },
                     include: [
+                        {
+                            model: Catalog,
+                            as: 'status_value',
+                        },
                         {
                             model: Provider,
                             as: 'provider',
